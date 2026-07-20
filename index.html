@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🏏 Cricket Scorekeeper</title>
     <!-- intro.js CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/introjs.min.css" />
     <style>
         /* ---------- RESET & BASE ---------- */
         * {
@@ -550,6 +550,68 @@
                 right: 12px;
             }
         }
+
+        /* ---------- INTRO.JS CUSTOM STYLING ---------- */
+        .introjs-tooltip {
+            border-radius: 12px !important;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25) !important;
+            font-family: inherit !important;
+            padding: 16px !important;
+            color: #1a2e1a !important;
+            background: #ffffff !important;
+            max-width: 340px !important;
+        }
+        .introjs-tooltip-title {
+            font-size: 18px !important;
+            font-weight: 700 !important;
+            color: #1a5a1a !important;
+            margin-bottom: 8px !important;
+        }
+        .introjs-tooltiptext {
+            font-size: 14px !important;
+            line-height: 1.5 !important;
+            color: #333333 !important;
+        }
+        .introjs-tooltipbuttons {
+            border-top: 1px solid #e2ece2 !important;
+            margin-top: 14px !important;
+            padding-top: 10px !important;
+            display: flex !important;
+            justify-content: flex-end !important;
+            gap: 8px !important;
+        }
+        .introjs-button {
+            border-radius: 8px !important;
+            font-weight: 600 !important;
+            font-size: 13px !important;
+            padding: 6px 14px !important;
+            background-image: none !important;
+            text-shadow: none !important;
+            border: 1px solid #c2d6c2 !important;
+            color: #1a5a1a !important;
+            background-color: #f0f7f0 !important;
+            transition: all 0.2s !important;
+        }
+        .introjs-button:hover {
+            background-color: #1a5a1a !important;
+            color: #ffffff !important;
+            border-color: #1a5a1a !important;
+        }
+        .introjs-button:focus {
+            box-shadow: 0 0 0 3px rgba(26, 90, 26, 0.2) !important;
+        }
+        .introjs-skipbutton {
+            float: left !important;
+            color: #666666 !important;
+            border: none !important;
+            background: transparent !important;
+        }
+        .introjs-progressbar {
+            background-color: #1a5a1a !important;
+        }
+        .introjs-helperLayer {
+            border-radius: 12px !important;
+        }
     </style>
 </head>
 <body>
@@ -661,7 +723,7 @@
     <div class="toast" id="toast"></div>
 
     <!-- intro.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/intro.js@7.2.0/intro.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.2.0/intro.min.js"></script>
     <script>
         // ============================================================
         // DATA MODEL
@@ -1417,8 +1479,8 @@
         // TOUR FUNCTION (intro.js)
         // ============================================================
         function startTour() {
-            // Ensure introJs is available
-            if (typeof introJs === 'undefined') {
+            const tourFn = window.introJs || (typeof introJs !== 'undefined' ? introJs : null);
+            if (!tourFn) {
                 showToast('⚠️ Tour library not loaded.');
                 return;
             }
@@ -1449,7 +1511,7 @@
                 intro: 'Use "Export" to download a full text scorecard. "Reset" clears all data and returns to the setup screen.'
             }];
 
-            introJs()
+            tourFn()
                 .setOptions({
                     steps: steps,
                     showProgress: true,
